@@ -7,30 +7,36 @@ function resize(){
 }
 
 resize();
-
 window.addEventListener("resize", resize);
 
 
 let words = [];
 
-const columnCount = 10;
+const columnCount = 12;
+const columnWidth = () => canvas.width / columnCount;
 
 
 function createWords(){
 
     words = [];
 
-    const columnWidth = canvas.width / columnCount;
+    for(let col = 0; col < columnCount; col++){
 
+        for(let row = 0; row < 8; row++){
 
-    for(let i = 0; i < columnCount; i++){
+            words.push({
 
-        words.push({
-            x: i * columnWidth + columnWidth / 2 - 45,
-            y: Math.random() * -800,
-            speed: 2,
-            text: "I love you"
-        });
+                x: col * columnWidth() + 5,
+
+                y: row * -60 - Math.random()*200,
+
+                speed: 3 + Math.random()*2,
+
+                size: 20
+
+            });
+
+        }
 
     }
 
@@ -46,27 +52,29 @@ function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
 
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "20px Arial";
+    ctx.fillStyle = "red";
 
 
-    words.forEach(word=>{
+    words.forEach(w=>{
+
+        ctx.font = `${w.size}px Arial`;
 
         ctx.fillText(
-            word.text,
-            word.x,
-            word.y
+            "I love you",
+            w.x,
+            w.y
         );
 
 
-        word.y += word.speed;
+        w.y += w.speed;
 
 
-        if(word.y > canvas.height + 50){
+        if(w.y > canvas.height + 40){
 
-            word.y = -100;
+            w.y = -100 - Math.random()*300;
 
         }
+
 
     });
 
