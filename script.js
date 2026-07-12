@@ -1,4 +1,3 @@
-alert("YENİ SCRIPT ÇALIŞIYOR");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -13,27 +12,29 @@ window.addEventListener("resize", resize);
 
 let words = [];
 
-const columnCount = 12;
-const columnWidth = () => canvas.width / columnCount;
+const columns = 14;
 
 
-function createWords(){
+function createRain(){
 
     words = [];
 
-    for(let col = 0; col < columnCount; col++){
+    let width = canvas.width / columns;
 
-        for(let row = 0; row < 8; row++){
+
+    for(let i = 0; i < columns; i++){
+
+        for(let j = 0; j < 12; j++){
 
             words.push({
 
-                x: col * columnWidth() + 5,
+                x: i * width,
 
-                y: row * -60 - Math.random()*200,
+                y: j * -70,
 
-                speed: 3 + Math.random()*2,
+                speed: 2 + Math.random()*1.5,
 
-                size: 20
+                size: 22
 
             });
 
@@ -44,8 +45,7 @@ function createWords(){
 }
 
 
-createWords();
-
+createRain();
 
 
 function animate(){
@@ -56,26 +56,25 @@ function animate(){
     ctx.fillStyle = "red";
 
 
-    words.forEach(w=>{
+    words.forEach(word=>{
 
-        ctx.font = `${w.size}px Arial`;
+        ctx.font = `${word.size}px Arial`;
 
         ctx.fillText(
             "I love you",
-            w.x,
-            w.y
+            word.x,
+            word.y
         );
 
 
-        w.y += w.speed;
+        word.y += word.speed;
 
 
-        if(w.y > canvas.height + 40){
+        if(word.y > canvas.height + 50){
 
-            w.y = -100 - Math.random()*300;
+            word.y = -100;
 
         }
-
 
     });
 
