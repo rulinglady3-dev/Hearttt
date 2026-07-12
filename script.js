@@ -5,37 +5,36 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 
-let texts=[];
+let texts = [];
 
-const columns = 40;
+const columnCount = 12; // sütun sayısı
+const gap = canvas.width / columnCount;
 
 
-for(let i=0;i<columns;i++){
+for(let i = 0; i < columnCount; i++){
 
     texts.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*-canvas.height,
-        speed: 1 + Math.random()*3,
-        size: 16 + Math.random()*10
+        x: i * gap + 10,
+        y: -Math.random()*500,
+        speed: 2,
+        size: 22
     });
 
 }
 
 
+
 function animate(){
 
-    ctx.fillStyle="rgba(0,0,0,0.15)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
 
-    ctx.font="bold 20px Arial";
+    ctx.fillStyle="white";
+    ctx.font="22px Arial";
 
 
     texts.forEach(t=>{
 
-        ctx.fillStyle="#ff4d88";
-
-        ctx.font=`${t.size}px Arial`;
 
         ctx.fillText(
             "I love you",
@@ -47,12 +46,12 @@ function animate(){
         t.y += t.speed;
 
 
-        if(t.y > canvas.height+50){
+        if(t.y > canvas.height + 40){
 
-            t.y=-50;
-            t.x=Math.random()*canvas.width;
+            t.y = -50;
 
         }
+
 
     });
 
@@ -65,9 +64,10 @@ function animate(){
 animate();
 
 
+
 window.addEventListener("resize",()=>{
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
 });
