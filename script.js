@@ -1,26 +1,43 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resize();
+
+window.addEventListener("resize", resize);
 
 
-let texts = [];
+let words = [];
 
-const columnCount = 12; // sütun sayısı
-const gap = canvas.width / columnCount;
+const columnCount = 10;
 
 
-for(let i = 0; i < columnCount; i++){
+function createWords(){
 
-    texts.push({
-        x: i * gap + 10,
-        y: -Math.random()*500,
-        speed: 2,
-        size: 22
-    });
+    words = [];
+
+    const columnWidth = canvas.width / columnCount;
+
+
+    for(let i = 0; i < columnCount; i++){
+
+        words.push({
+            x: i * columnWidth + columnWidth / 2 - 45,
+            y: Math.random() * -800,
+            speed: 2,
+            text: "I love you"
+        });
+
+    }
 
 }
+
+
+createWords();
 
 
 
@@ -29,29 +46,27 @@ function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
 
-    ctx.fillStyle="white";
-    ctx.font="22px Arial";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "20px Arial";
 
 
-    texts.forEach(t=>{
-
+    words.forEach(word=>{
 
         ctx.fillText(
-            "I love you",
-            t.x,
-            t.y
+            word.text,
+            word.x,
+            word.y
         );
 
 
-        t.y += t.speed;
+        word.y += word.speed;
 
 
-        if(t.y > canvas.height + 40){
+        if(word.y > canvas.height + 50){
 
-            t.y = -50;
+            word.y = -100;
 
         }
-
 
     });
 
@@ -62,12 +77,3 @@ function animate(){
 
 
 animate();
-
-
-
-window.addEventListener("resize",()=>{
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-});
